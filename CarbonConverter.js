@@ -64,12 +64,14 @@ export default class CarbonConverter extends React.Component {
         depart: {
           name: departData["name"],
           lat: departData["lat"],
-          lon: departData["lon"]
+          lon: departData["lon"],
+          code: depart
         },
         arrive: {
           name: arriveData["name"],
           lat: arriveData["lat"],
-          lon: arriveData["lon"]
+          lon: arriveData["lon"],
+          code: arrive
         }
       });
     }

@@ -45,12 +45,12 @@ export default class App extends React.Component {
       },
       {
         arr: {
-          lat: 15,
-          lon: 25
+          lat: 40,
+          lon: -75
         },
         dep: {
-          lat: 12,
-          lon: -70
+          lat: 55,
+          lon: 38
         },
       }
     ]
@@ -82,18 +82,20 @@ export default class App extends React.Component {
             latitudeDelta: 90,
             longitudeDelta: 180,
           }}>
-            {flights.map(function(name, index){
-                console.log(name);
+            {
+              flights.map( (name, index, flights) => {
+                console.log(name,index);
                 let geo = Geodesic(name.dep.lat,name.dep.lon,name.arr.lat,name.arr.lon);
-                return (
-                  <MapView.Polyline
-                    coordinates={geo}
-                    strokeColor={color[index % color.length]}
-                    strokeWidth={3}
-                    geodesic={true}
-                  />
-                );
-              })}
+                return   <MapView.Polyline
+                            coordinates={geo}
+                            strokeColor={color[index % color.length]}
+                            strokeWidth={3}
+                            geodesic={true}
+                            key = {index}
+                          />
+              })
+
+            }
           </MapView>
       </View>
     );
