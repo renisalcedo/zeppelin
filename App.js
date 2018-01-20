@@ -1,6 +1,6 @@
 // root app component
 
 import React from 'react';
-import AddNavigator from './AddNavigator'
+import AddNavigator from './components/AddNavigator'
 
 export default AddNavigator
