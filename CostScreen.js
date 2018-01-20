@@ -5,6 +5,9 @@ import {
   View,
   Text,
 } from 'react-native';
+import { MapView } from 'expo';
+
+import {Geodesic} from './Geodesic';
 
 export default class CostScreen extends Component {
 
@@ -27,15 +30,35 @@ export default class CostScreen extends Component {
     let arrive = params.trip.arrive;
     let depart = params.trip.depart;
 
+    let x1 = parseFloat(depart.lat);
+    let y1 = parseFloat(depart.lon);
+    let x2 = parseFloat(arrive.lat);
+    let y2 = parseFloat(arrive.lon);
+
     return (
-      <View>
-        <Text>Cost: ${cost}</Text>
-        <Text>From: {depart.name}</Text>
-        <Text>Lat: {depart.lat}</Text>
-        <Text>Lon: {depart.lon}</Text>
-        <Text>To: {arrive.name}</Text>
-        <Text>Lat: {arrive.lat}</Text>
-        <Text>Lon: {arrive.lon}</Text>
+      <View style={{flex:1}}>
+        <View style={{flex: 1}}>
+          <Text>From: {depart.name}</Text>
+          <Text>To: {arrive.name}</Text>
+          <Text>Cost: ${cost}</Text>
+        </View>
+        <View style={{flex:4}}>
+          <MapView
+            style={{ flex: 1 }}
+            initialRegion={{
+              latitude: (x1+x2)/2,
+              longitude: (y1+y2)/2,
+              latitudeDelta: 1.2*Math.abs(x1-x2),
+              longitudeDelta: 1.2*Math.abs(y1-y2),
+            }}>
+            <MapView.Polyline
+              coordinates={Geodesic(x1,y1,x2,y2)}
+              strokeColor="#33F" // fallback for when `strokeColors` is not supported by the map-provider
+              strokeWidth={3}
+              geodesic={true} />
+
+            </MapView>
+        </View>
       </View>
     );
   }
