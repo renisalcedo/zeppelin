@@ -8,6 +8,10 @@ import {
 
 export default class CostScreen extends Component {
 
+  constructor(props) {
+    super(props);
+  }
+
   static navigationOptions = ({ navigation }) => {
     return {
       title: `Total Amount Paid`,
@@ -35,6 +39,5 @@ export default class CostScreen extends Component {
       </View>
     );
   }
-
 
 }

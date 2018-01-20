@@ -27,7 +27,8 @@ export default class AddScreen extends Component {
   }
 
   dollarCallback = (trip,cost) => {
-    this.props.navigation.navigate("CostScreen",{screen: CostScreen, trip: trip, cost: cost});
+    // console.log(global.moveToCostScreen);
+    global.moveToCostScreen(trip,cost);
   }
 
 };

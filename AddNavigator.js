@@ -10,19 +10,21 @@ import {
 import { StackNavigator } from 'react-navigation';
 
 import HomeScreen from './HomeScreen'
-import AddScreen from './AddScreen'
+import ModeSelectorTabs from './ModeSelectorTabs'
 import CostScreen from './CostScreen'
 
 // keeps scanner from triggering when it's not on the screen
 // kinda a hack but let's roll with it
 global.scannerActive = false;
+global.modeChooserActive = false;
+global.moveToCostScreen = () => { return null };
 
 const AddScreenNavigator = StackNavigator({
   HomeScreen: {
     screen: HomeScreen
   },
-  AddScreen: {
-    screen: AddScreen
+  ModeSelectorTabs: {
+    screen: ModeSelectorTabs
   },
   CostScreen: {
     screen: CostScreen
@@ -38,10 +40,10 @@ export default class AddNavigator extends Component {
         onNavigationStateChange={(prevState, currentState) => {
           let screenName = currentState.routes[currentState.routes.length-1]['routeName'];
           console.log(screenName);
-          if(screenName == 'AddScreen') {
-            global.scannerActive = true;
+          if(screenName == 'ModeSelectorTabs') {
+            global.modeChooserActive = true;
           } else {
-            global.scannerActive = false;
+            global.modeChooserActive = false;
           }
         }}
       />

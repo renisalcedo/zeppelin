@@ -14,6 +14,13 @@ import AddScreen from './AddScreen'
 
 export default class HomeScreen extends Component {
 
+  constructor(props) {
+    super(props);
+
+    global.moveToCostScreen = (trip, cost) => { this.arriveAtCostScreen(trip,cost)};
+
+  }
+
   static navigationOptions = ({ navigation }) => {
     const { params = {} } = navigation.state;
     let headerRight = (
@@ -22,7 +29,7 @@ export default class HomeScreen extends Component {
         <View style={{flex: 1, flexDirection: 'row'}}>
           <TouchableOpacity onPress={params.addScreen ? params.addScreen : () => null}>
             <Ionicons
-              name={'ios-map-outline'}
+              name={'md-add'}
               size={26}
               style={{color:'#397CF2'}} />
           </TouchableOpacity>
@@ -34,12 +41,16 @@ export default class HomeScreen extends Component {
   };
 
   addScreen = () => {
-    this.props.navigation.navigate("AddScreen",{screen: AddScreen});
+    this.props.navigation.navigate("ModeSelectorTabs",{screen: AddScreen});
   }
 
   componentDidMount() {
     // We can only set the function after the component has been initialized
     this.props.navigation.setParams({ addScreen: this.addScreen });
+  }
+
+  arriveAtCostScreen(trip, cost) {
+    this.props.navigation.navigate("CostScreen",{trip: trip, cost: cost});
   }
 
   render() {

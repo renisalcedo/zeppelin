@@ -40,7 +40,7 @@ export default class BoardingPassScanner extends React.Component {
   }
 
   handleBarCodeRead = ({ type, data }) => {
-    if(type == "org.iso.PDF417" && global.scannerActive ) {
+    if(type == "org.iso.PDF417" && global.scannerActive && global.modeChooserActive ) {
       global.scannerActive = false;
       let depart = data.substr(30,3);
       let arrive = data.substr(33,3)
