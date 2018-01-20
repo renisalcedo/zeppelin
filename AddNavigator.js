@@ -39,12 +39,12 @@ export default class AddNavigator extends Component {
       <AddScreenNavigator
         onNavigationStateChange={(prevState, currentState) => {
           let screenName = currentState.routes[currentState.routes.length-1]['routeName'];
-          console.log(screenName);
           if(screenName == 'ModeSelectorTabs') {
             global.modeChooserActive = true;
           } else {
             global.modeChooserActive = false;
           }
+          console.log("Chooser: "+global.modeChooserActive);
         }}
       />
     );

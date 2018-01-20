@@ -41,19 +41,24 @@ const ChooseNavigator = TabNavigator({
 
 export default class ModeSelectorTabs extends Component {
 
+  static navigationOptions = ({ navigation }) => {
+    return {
+      title: `Select Mode of Transit`,
+    }
+  };
+
   render() {
 
     return (
       <ChooseNavigator
         onNavigationStateChange={(prevState, currentState) => {
           let screenName = currentState.routes[currentState.index]['routeName'];
-          console.log(screenName);
-          console.log(currentState);
           if(screenName == 'AddScreen') {
             global.scannerActive = true;
           } else {
             global.scannerActive = false;
           }
+          console.log("Scanner: "+global.scannerActive);
         }}
       />
     );

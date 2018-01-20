@@ -37,7 +37,7 @@ export default class HomeScreen extends Component {
         </View>
       </View>
     );
-    return { title: "Welcome", headerRight };
+    return { headerRight };
   };
 
   addScreen = () => {
