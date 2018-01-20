@@ -1,53 +1,70 @@
-// screen that tracks total contributions, social integration?
-import React, { Component } from 'react'
-import {
-  Text,
-  View,
-  StyleSheet,
-} from 'react-native'
+import React, { Component } from "react"
+import { StyleSheet, View, Switch } from "react-native"
+import { CreditCardInput, LiteCreditCardInput } from "react-native-credit-card-input"
 
-import t from 'tcomb-form-native'
+export default class CreditCardScreen extends Component {
+  state = { useLiteCreditCardInput: false }
 
-const Form = t.form.Form
-
-const User = t.struct({
-  firstName: t.String,
-  lastName: t.String,
-  cardNumber: t.Number,
-  expMonth: t.Number,
-  expYear: t.Number,
-  cvc: t.Number,
-})
-
-export default class CreditCardScreen extends React.Component {
-  constructor() {
-    super()
-    this.state = {
-      firstName: '',
-      lastName:  '',
-      cardNumber: 0,
-      expMonth: 0,
-      expoYear: 0,
-      cvc: 0,
-    }
-  }
+  _onChange = (formData) => console.log(JSON.stringify(formData, null, " "))
+  _onFocus = (field) => console.log("focusing", field)
+  _setUseLiteCreditCardInput = (useLiteCreditCardInput) => this.setState({ useLiteCreditCardInput })
 
   render() {
     return (
-      <View style={styles.container}>
-        <Form
-          type={User}
-        />
+      <View style={s.container}>
+        <Switch
+          style={s.switch}
+          onValueChange={this._setUseLiteCreditCardInput}
+          value={this.state.useLiteCreditCardInput} />
+
+        { this.state.useLiteCreditCardInput ?
+          (
+            <LiteCreditCardInput
+              inputStyle={s.input}
+              validColor={"black"}
+              invalidColor={"red"}
+              placeholderColor={"darkgray"}
+
+              onFocus={this._onFocus}
+              onChange={this._onChange} />
+          ) : (
+            <CreditCardInput
+              requiresName
+              requiresCVC
+              requiresPostalCode
+
+              cardScale={1.0}
+              labelStyle={s.label}
+              inputStyle={s.input}
+              validColor={"black"}
+              invalidColor={"red"}
+              placeholderColor={"darkgray"}
+
+              onFocus={this._onFocus}
+              onChange={this._onChange} />
+          )
+        }
       </View>
-    )
+    );
   }
 }
 
-const styles = StyleSheet.create({
+const s = StyleSheet.create({
+  switch: {
+    alignSelf: "center",
+    marginTop: 20,
+    marginBottom: 20,
+  },
   container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center'
-  }
-})
+    backgroundColor: "#F5F5F5",
+    marginTop: 60,
+  },
+  label: {
+    color: "black",
+    fontSize: 12,
+  },
+  input: {
+    fontSize: 16,
+    color: "black",
+  },
+});

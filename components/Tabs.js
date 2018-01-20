@@ -68,4 +68,6 @@ export default TabNavigator({
       ),
     },
   },
+}, {
+  lazy: true
 });
