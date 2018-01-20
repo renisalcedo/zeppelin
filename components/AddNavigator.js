@@ -36,6 +36,27 @@ const AddScreenNavigator = StackNavigator(
     }
   });
 
+
+
+  const defaultGetStateForAction = AddScreenNavigator.router.getStateForAction;
+  AddScreenNavigator.router.getStateForAction = (action, state) => {
+      if (state && action.type === 'GoToRoute') {
+          let index = state.routes.findIndex((item) => {
+              return item.routeName === action.routeName
+          });
+          const routes = state.routes.slice(0, index+1);
+          return {
+              routes,
+              index
+          };
+      }
+      return defaultGetStateForAction(action, state);
+  };
+
+
+
+
+
 export default class AddNavigator extends Component {
 
   render() {
@@ -43,6 +64,7 @@ export default class AddNavigator extends Component {
     return (
       <AddScreenNavigator
         onNavigationStateChange={(prevState, currentState) => {
+          console.log(currentState);
           let screenName = currentState.routes[currentState.routes.length-1]['routeName'];
           if(screenName == 'ModeSelectorTabs') {
             global.modeChooserActive = true;

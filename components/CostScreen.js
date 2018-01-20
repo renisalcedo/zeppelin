@@ -48,7 +48,10 @@ export default class CostScreen extends Component {
   };
 
   finishTransaction() {
-    this.props.navigation.navigate("SuccessScreen");
+    this.props.navigation.navigate("SuccessScreen",{
+       cost: this.props.navigation.state.params.cost,
+       carbon: this.props.navigation.state.params.carbon
+     });
   }
 
   render() {

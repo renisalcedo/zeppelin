@@ -26,9 +26,9 @@ export default class AddScreen extends Component {
     );
   }
 
-  dollarCallback = (trip,cost) => {
+  dollarCallback = (trip,cost,carbon) => {
     // console.log(global.moveToCostScreen);
-    global.moveToCostScreen(trip,cost);
+    global.moveToCostScreen(trip,cost,carbon);
   }
 
 };

@@ -68,4 +68,13 @@ export default TabNavigator({
       ),
     },
   },
+},{
+  tabBarOptions:{
+    activeTintColor: '#396',
+    activeBackgroundColor: '#CCC',
+    labelStyle: {
+      fontSize: 12,
+    },
+    title: 'App'
+  }
 });
