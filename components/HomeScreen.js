@@ -18,7 +18,8 @@ export default class HomeScreen extends Component {
     super(props);
 
     global.moveToCostScreen = (trip, cost, carbon) => { this.arriveAtCostScreen(trip,cost,carbon)};
-    
+    global.moveToSuccessScreen = (trip, cost, carbon) => { this.arriveAtSuccessScreen(trip,cost,carbon)};
+
   }
 
   static navigationOptions = ({ navigation }) => {
@@ -49,8 +50,12 @@ export default class HomeScreen extends Component {
     this.props.navigation.setParams({ addScreen: this.addScreen });
   }
 
-  arriveAtCostScreen(trip, cost,carbon) {
+  arriveAtCostScreen(trip, cost, carbon) {
     this.props.navigation.navigate("CostScreen",{trip: trip, cost: cost, carbon: carbon});
+  }
+
+  arriveAtSuccessScreen(trip, cost, carbon) {
+    this.props.navigation.navigate("SuccessScreen",{trip: trip, cost: cost, carbon: carbon});
   }
 
   render() {

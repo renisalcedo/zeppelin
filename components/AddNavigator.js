@@ -19,6 +19,7 @@ import SuccessScreen from './SuccessScreen'
 global.scannerActive = false;
 global.modeChooserActive = false;
 global.moveToCostScreen = () => { return null };
+global.moveToSuccessScreen = () => { return null };
 
 const AddScreenNavigator = StackNavigator(
   {
