@@ -12,6 +12,7 @@ import { StackNavigator } from 'react-navigation';
 import HomeScreen from './HomeScreen'
 import ModeSelectorTabs from './ModeSelectorTabs'
 import CostScreen from './CostScreen'
+import SuccessScreen from './SuccessScreen'
 
 // keeps scanner from triggering when it's not on the screen
 // kinda a hack but let's roll with it
@@ -19,17 +20,21 @@ global.scannerActive = false;
 global.modeChooserActive = false;
 global.moveToCostScreen = () => { return null };
 
-const AddScreenNavigator = StackNavigator({
-  HomeScreen: {
-    screen: HomeScreen
-  },
-  ModeSelectorTabs: {
-    screen: ModeSelectorTabs
-  },
-  CostScreen: {
-    screen: CostScreen
-  }
-})
+const AddScreenNavigator = StackNavigator(
+  {
+    HomeScreen: {
+      screen: HomeScreen
+    },
+    ModeSelectorTabs: {
+      screen: ModeSelectorTabs
+    },
+    CostScreen: {
+      screen: CostScreen
+    },
+    SuccessScreen: {
+      screen: SuccessScreen
+    }
+  });
 
 export default class AddNavigator extends Component {
 

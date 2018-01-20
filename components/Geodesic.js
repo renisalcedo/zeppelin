@@ -21,10 +21,6 @@ export const Geodesic = (lat1,lon1,lat2,lon2) => {
       longitude: r.lon2
     });
 
-    console.log({
-      latitude: r.lat2,
-      longitude: r.lon2
-    });
   }
 
   return path;

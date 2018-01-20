@@ -41,9 +41,15 @@ export default class CostScreen extends Component {
 
   static navigationOptions = ({ navigation }) => {
     return {
-      title: `Total Amount Paid`,
+      title: `Offset Your Flight`,
+      headerMode: 'screen',
+      headerVisible: false
     }
   };
+
+  finishTransaction() {
+    this.props.navigation.navigate("SuccessScreen");
+  }
 
   render() {
 
@@ -86,7 +92,7 @@ export default class CostScreen extends Component {
           </MapView>
         </View>
         <View style={{flex: 2, backgroundColor: 'white', opacity: 1}}>
-          <TouchableOpacity style={styles.donateButton} onPress={()=>{}}>
+          <TouchableOpacity style={styles.donateButton} onPress={this.finishTransaction.bind(this)}>
             <Text style={{fontSize: 30}}>{'Offset for $'+cost}</Text>
           </TouchableOpacity>
         </View>
