@@ -11,7 +11,7 @@ import getDistance from 'geolib';
 import BoardingPassScanner from './BoardingPassScanner'
 
 
-var airportCodes = require('./airports.json');
+var airportCodes = require('./utils/airports.json');
 
 export default class CarbonConverter extends React.Component {
 
