@@ -29,6 +29,7 @@
     "react-native-ui-kitten": "^3.0.0",
     "react-native-vector-icons": "^4.5.0",
     "react-navigation": "^1.0.0-beta.27",
-    "react-navigation-slide-from-right-transition": "^1.0.4"
+    "react-navigation-slide-from-right-transition": "^1.0.4",
+    "stripe": "^5.4.0"
   }
 }
