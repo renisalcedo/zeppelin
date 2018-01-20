@@ -4,10 +4,34 @@ import React, { Component } from 'react';
 import {
   View,
   Text,
+  StyleSheet,
+  Button,
+  TouchableOpacity,
+  TouchableHighlight
 } from 'react-native';
 import { MapView } from 'expo';
 
 import {Geodesic} from './Geodesic';
+
+const styles = StyleSheet.create({
+  airport: {
+    fontSize: 40,
+    fontWeight: '400',
+    color: '#000'
+  },
+  header: {
+    flex: 2,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#0F0'
+  },
+  donateButton: {
+    backgroundColor: '#F00',
+    flex: 2,
+    justifyContent: 'center',
+    alignItems: 'center',
+  }
+})
 
 export default class CostScreen extends Component {
 
@@ -37,27 +61,34 @@ export default class CostScreen extends Component {
 
     return (
       <View style={{flex:1}}>
-        <View style={{flex: 1}}>
-          <Text>From: {depart.name}</Text>
-          <Text>To: {arrive.name}</Text>
-          <Text>Cost: ${cost}</Text>
+        <View style={styles.header}>
+          <Text style={styles.airport}>{depart.code} -> {arrive.code}</Text>
         </View>
-        <View style={{flex:4}}>
+        <View style={{flex:16}}>
           <MapView
             style={{ flex: 1 }}
             initialRegion={{
               latitude: (x1+x2)/2,
               longitude: (y1+y2)/2,
-              latitudeDelta: 1.2*Math.abs(x1-x2),
-              longitudeDelta: 1.2*Math.abs(y1-y2),
+              latitudeDelta: 1.5*Math.abs(x1-x2),
+              longitudeDelta: 1.5*Math.abs(y1-y2),
             }}>
             <MapView.Polyline
               coordinates={Geodesic(x1,y1,x2,y2)}
               strokeColor="#33F" // fallback for when `strokeColors` is not supported by the map-provider
               strokeWidth={3}
-              geodesic={true} />
+              geodesic={true}
+              lineDashPattern={[10,3,3,3]}
+              />
+            <MapView.Marker coordinate={{ latitude: x1, longitude: y1}} pinColor='green'  />
+            <MapView.Marker coordinate={{ latitude: x2, longitude: y2 }} />
 
-            </MapView>
+          </MapView>
+        </View>
+        <View style={{flex: 2, backgroundColor: 'white', opacity: 1}}>
+          <TouchableOpacity style={styles.donateButton} onPress={()=>{}}>
+            <Text style={{fontSize: 30}}>{'Offset for $'+cost}</Text>
+          </TouchableOpacity>
         </View>
       </View>
     );
