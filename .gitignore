@@ -1,8 +1,3 @@
-# See https://help.github.com/ignore-files/ for more about ignoring files.
-
-# expo
-.expo/
-
 # dependencies
 /node_modules
 
@@ -15,3 +10,7 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+yarn.lock
+/node_modules
+/server/ngrok
+/server/utils/stripeKey.js
