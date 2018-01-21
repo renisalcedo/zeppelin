@@ -102,7 +102,7 @@ export default class CostScreen extends Component {
             <MapView.Marker coordinate={{ latitude: (x2+x1)/2, longitude: (y2+y1)/2 }}>
               <View
                 style={{
-                  backgroundColor: '#37383A',
+                  backgroundColor: '#37383A', 
                   borderRadius: 5,
                   borderColor: 'black',
                   borderWidth: 1,

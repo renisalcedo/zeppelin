@@ -151,7 +151,7 @@ export default class AddScreenCar extends Component {
         };
     this.setState({region : newRegion, trip: saveCoords});
   }
- 
+
   truncate(str) {
     return str.split(" ").splice(0,10).join(" ");
   }
@@ -173,10 +173,10 @@ export default class AddScreenCar extends Component {
            stroke='#B6E8EF'
            miterLimit={15}
          />
-          <MapView.Marker
+          <MapView.Marker pinColor='#357A51'
              coordinate={{latitude: this.state.startLocation.lat, longitude: this.state.startLocation.lng}}
           />
-          <MapView.Marker
+          <MapView.Marker pinColor='#961616'
              coordinate={{latitude: this.state.endLocation.lat, longitude: this.state.endLocation.lng}}
           />
        </MapView>

@@ -26,18 +26,18 @@ export default class HomeScreen extends Component {
   static navigationOptions = ({ navigation }) => {
     const { params = {} } = navigation.state;
     let headerRight = (
+      <TouchableOpacity onPress={params.addScreen ? params.addScreen : () => null}>
       <View style={{flex:1}}>
         <View style={{width: 5, height: 8,}}></View>
         <View style={{flex: 1, flexDirection: 'row'}}>
-          <TouchableOpacity onPress={params.addScreen ? params.addScreen : () => null}>
             <Ionicons
               name={'md-add'}
               size={26}
               style={{color:global.palette[1]}} />
-          </TouchableOpacity>
           <View style={{width: 17, height: 20, opacity: 0}} />
         </View>
       </View>
+      </TouchableOpacity>
     );
     return { headerRight };
   };
