@@ -55,7 +55,7 @@ export default class HomeScreen extends Component {
   }
 
   arriveAtSuccessScreen(trip, cost, carbon) {
-    this.props.navigation.navigate("SuccessScreen",{trip: trip, cost: cost, carbon: carbon});
+    this.props.navigation.navigate("SuccessScreen",{trip: trip, cost: cost, carbon: carbon, mode: 'car'});
   }
 
   render() {

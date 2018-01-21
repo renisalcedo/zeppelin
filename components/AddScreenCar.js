@@ -42,7 +42,7 @@ export default class AddScreenCar extends Component {
   };
 
   dollarCallback = () => {
-    global.moveToSuccessScreen(this.state.trip,this.state.donate,this.state.carbon);
+    global.moveToSuccessScreen(this.state.trip,this.state.donate,this.state.carbon,'car');
   }
 
   componentWillMount() {

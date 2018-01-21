@@ -5,12 +5,14 @@ import {
   View,
   Text,
   Animated,
+  Easing,
   TouchableOpacity
 } from "react-native";
 import { NavigationActions } from 'react-navigation'
 
 import { DangerZone } from "expo";
-import wiggly from "./airplane.json";
+import plane from "./airplane.json";
+import car from "./car.json";
 import check from "./success.json";
 
 
@@ -32,11 +34,18 @@ export default class SuccessScreen extends React.Component {
     speed: .7,
     opacity: new Animated.Value(0),
     checkAnimation: null,
+    mode: null,
+    pixel: new Animated.Value(-550),
+    carOpacity: 0
   };
 
   componentWillMount() {
     this._playAnimation();
     setTimeout(this._playCheck,delay);
+    this.setState({
+      pixel: new Animated.Value(-550),
+      carOpacity: 0
+    })
   }
 
   componentDidMount() {
@@ -53,6 +62,22 @@ export default class SuccessScreen extends React.Component {
 
     },delay);
 
+    if(this.props.navigation.state.params.mode == 'car') {
+      setTimeout(()=>{
+        this.setState({
+          carOpacity: 1
+        })
+        Animated.timing(
+          this.state.pixel,
+          {
+            toValue: 100,
+            duration: (delay-800),
+            easing: Easing.linear
+          }
+        ).start();
+      },500)
+    }
+
 
     // TODO: conduct payment here
 
@@ -66,6 +91,8 @@ export default class SuccessScreen extends React.Component {
     let cost = params.cost;
     let co2 = params.carbon;
 
+    let mode = params.mode;
+
     return (
       <View style={styles.container}>
 
@@ -74,7 +101,8 @@ export default class SuccessScreen extends React.Component {
           zIndex: 4,
           height: 200,
           flexDirection: 'row',
-          justifyContent: 'space-between'}}>
+          justifyContent: 'space-between',
+          backgroundColor: 'transparent'}}>
 
           <View style={{width: 50,height:200}}></View>
           <View style={{width:200,height:200}}>
@@ -99,22 +127,33 @@ export default class SuccessScreen extends React.Component {
 
 
 
-        <View style={styles.animationContainer}>
+        <Animated.View style={[
+            styles.animationContainer,
+            (mode == 'car' ? {
+              flex:1,
+              justifyContent: 'center',
+              left: this.state.pixel,
+              top:-70,
+              opacity: this.state.carOpacity
+            } : {
+              top: 0,
+              flex:1,
+              justifyContent: 'center',
+            })
+          ]}>
           {this.state.animation && (
             <Lottie
               ref={animation => {
                 this.animation = animation;
               }}
-              style={{
-                width: 1078,
-                height: 700,
-              }}
+              style={
+                (mode =='car' ? {width: 800, height: 519} : {width: 1078, height: 700} )}
               source={this.state.animation}
               speed={this.state.speed}
               loop={false}
             />
           )}
-        </View>
+        </Animated.View>
         <Animated.View style={[styles.tag,{top: 90,opacity:this.state.opacity}]}>
           <Text style={[styles.words, {fontSize:70}]}>Woohoo!</Text>
         </Animated.View>
@@ -160,7 +199,8 @@ export default class SuccessScreen extends React.Component {
   };
 
   _loadAnimation = () => {
-    this.setState({ animation: wiggly }, this._playAnimation);
+    let mode = this.props.navigation.state.params.mode;
+    this.setState({ animation: (mode == 'plane' ? plane : car) }, this._playAnimation);
   };
 
   _loadCheck = () => {
@@ -168,10 +208,6 @@ export default class SuccessScreen extends React.Component {
   };
 
   _exit = () => {
-    // console.log()
-    // this.props.navigation.goBack('AddScreen')
-
-    console.log("exiting!");
 
     this.props.navigation.dispatch({
       routeName:'HomeScreen',
