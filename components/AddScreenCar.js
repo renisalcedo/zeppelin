@@ -73,6 +73,11 @@ export default class AddScreenCar extends Component {
     }
   }
 
+  setFromToCurrentLocation() {
+    latitude = String(this.state.location.coords.latitude);
+    longitude = String(this.state.location.coords.longitude);
+    this.setState({from: latitude + ", " + longitude});
+  }
 
 
 
