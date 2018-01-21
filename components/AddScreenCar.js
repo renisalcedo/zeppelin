@@ -16,6 +16,7 @@ import PopupDialog, {
 import CarbonConverter from './CarbonConverter'
 import SuccessScreen from './SuccessScreen'
 
+require('./Palette.js');
 
 const GEOLOCATION_OPTIONS = { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 };
 
@@ -77,6 +78,9 @@ export default class AddScreenCar extends Component {
     const mode = 'driving'; // 'walking';
     const origin = this.state.from;
     const destination = this.state.to;
+    if(origin == '' || destination == '') {
+      return;
+    }
     const APIKEY = 'AIzaSyCGBiv58zM5ElIejqsHz5yB8K_qIsfwUc0';
     const url = `https://maps.googleapis.com/maps/api/directions/json?origin=${origin}&destination=${destination}&key=${APIKEY}&mode=${mode}`;
     fetch(url)
@@ -128,6 +132,7 @@ export default class AddScreenCar extends Component {
       this.state.allLongs.push(this.state.coords[coord].longitude);
       saveCoords.push(this.state.coords[coord]);
     }
+
     maxLat = Math.max(...this.state.allLats);
     minLat = Math.min(...this.state.allLats);
     maxLong = Math.max(...this.state.allLongs);
@@ -149,88 +154,99 @@ export default class AddScreenCar extends Component {
     return (
        <View style={styles.container}>
 
-         <MapView
-           style = {styles.map}
-           showsUserLocation={true}
-           region = {this.state.region}
-         >
-           <MapView.Polyline
-             coordinates={[...this.state.coords]}
-             strokeWidth={2}
-             fillColor='#B6E8EF'
-             stroke='#B6E8EF'
-           />
-         </MapView>
-        <View style={styles.entryView}>
-          <Button title={this.state.from} style={styles.button} borderRadius={5} backgroundColor='#D8EBFF' icon={{name: 'crosshairs-gps', type: 'material-community'}} onPress={() => {
-              this.popupDialogFrom.show();
-            }}
-          > To {this.state.to} </Button>
-          <PopupDialog
-            ref={(popupDialog) => { this.popupDialogFrom = popupDialog; }}
-          >
-            <GooglePlacesAutocomplete
-               styles={{
-                 listView: {
-                   backgroundColor: 'white'
-                 }
-               }}
-               placeholder='Search'
-               minLength={2} // minimum length of text to search
-               onPress={(data, details = null) => { // 'details' is provided when fetchDetails = true
-                this.setState({from:String(data.description)});
-                 console.log(details);
-                 this.popupDialogFrom.dismiss();
-               }}
-               query={{
-                 // available options: https://developers.google.com/places/web-service/autocomplete
-                 key: 'AIzaSyCGBiv58zM5ElIejqsHz5yB8K_qIsfwUc0',
-                 language: 'en', // language of the results
-               }}
-               nearbyPlacesAPI='GooglePlacesSearch' // Which API to use: GoogleReverseGeocoding or GooglePlacesSearch
 
-               GooglePlacesSearchQuery={{
-                 // available options for GooglePlacesSearch API : https://developers.google.com/places/web-service/search
-                 rankby: 'distance',
-               }}
-             />
-          </PopupDialog>
+       <MapView
+         style = {styles.map}
+         showsUserLocation={true}
+         region = {this.state.region}
+       >
+         <MapView.Polyline
+           coordinates={[...this.state.coords]}
+           strokeWidth={2}
+           fillColor='#B6E8EF'
+           stroke='#B6E8EF'
+         />
+       </MapView>
 
-          <Button title={this.state.to} style={styles.button} borderRadius={5} backgroundColor='#D8EBFF' icon={{name: 'map-marker', type: 'material-community'}} onPress={() => {
-              this.popupDialogTo.show();
-            }}/>
+
+        <View style={[styles.entryView,{height:50}]}>
+          <View style={{flex:1}}>
+            <Button title={this.state.from} style={styles.button} borderRadius={2} backgroundColor={global.palette[3]} icon={{name: 'crosshairs-gps', type: 'material-community'}} onPress={() => {
+                this.popupDialogFrom.show();
+              }}
+            > To {this.state.to} </Button>
             <PopupDialog
-            ref={(popupDialog) => { this.popupDialogTo = popupDialog; }}
-          >
-            <GooglePlacesAutocomplete
-               styles={{
-                 listView: {
-                   backgroundColor: 'white'
-                 }
-               }}
-               placeholder='Search'
-               minLength={2} // minimum length of text to search
-               onPress={(data, details = null) => { // 'details' is provided when fetchDetails = true
-                this.setState({to:String(data.description)});
-                 console.log(details);
-                 this.popupDialogTo.dismiss();
-               }}
-               query={{
-                 // available options: https://developers.google.com/places/web-service/autocomplete
-                 key: 'AIzaSyCGBiv58zM5ElIejqsHz5yB8K_qIsfwUc0',
-                 language: 'en', // language of the results
-               }}
-               nearbyPlacesAPI='GooglePlacesSearch' // Which API to use: GoogleReverseGeocoding or GooglePlacesSearch
+              ref={(popupDialog) => { this.popupDialogFrom = popupDialog; }}
+            >
+              <GooglePlacesAutocomplete
+                 styles={{
+                   listView: {
+                     backgroundColor: 'white'
+                   }
+                 }}
+                 placeholder='Search'
+                 minLength={2} // minimum length of text to search
+                 onPress={(data, details = null) => { // 'details' is provided when fetchDetails = true
+                  this.setState({from:String(data.description)});
+                   console.log(details);
+                   this.popupDialogFrom.dismiss();
+                 }}
+                 query={{
+                   // available options: https://developers.google.com/places/web-service/autocomplete
+                   key: 'AIzaSyCGBiv58zM5ElIejqsHz5yB8K_qIsfwUc0',
+                   language: 'en', // language of the results
+                 }}
+                 nearbyPlacesAPI='GooglePlacesSearch' // Which API to use: GoogleReverseGeocoding or GooglePlacesSearch
 
-               GooglePlacesSearchQuery={{
-                 // available options for GooglePlacesSearch API : https://developers.google.com/places/web-service/search
-                 rankby: 'distance',
-               }}
-             />
-          </PopupDialog>
-          <Button style={styles.bottomButtonCalculate} backgroundColor='#D8EBFF' icon={{name: 'checkbox-marked-circle-outline', type: 'material-community'}} onPress={this.onButtonPressSearchDirections.bind(this)}
-/>
-          <Button style={styles.bottomButtonDonate} title={this.state.donate} backgroundColor='#D8EBFF' icon={{name: 'currency-usd', type: 'material-community'}} onPress={this.dollarCallback}/>
+                 GooglePlacesSearchQuery={{
+                   // available options for GooglePlacesSearch API : https://developers.google.com/places/web-service/search
+                   rankby: 'distance',
+                 }}
+               />
+            </PopupDialog>
+
+            <Button title={this.state.to} style={styles.button} borderRadius={2} backgroundColor={global.palette[3]} icon={{name: 'map-marker', type: 'material-community'}} onPress={() => {
+                this.popupDialogTo.show();
+              }}/>
+              <PopupDialog
+              ref={(popupDialog) => { this.popupDialogTo = popupDialog; }}
+            >
+              <GooglePlacesAutocomplete
+                 styles={{
+                   listView: {
+                     backgroundColor: 'white'
+                   }
+                 }}
+                 placeholder='Search'
+                 minLength={2} // minimum length of text to search
+                 onPress={(data, details = null) => { // 'details' is provided when fetchDetails = true
+                  this.setState({to:String(data.description)});
+                   console.log(details);
+                   this.popupDialogTo.dismiss();
+                 }}
+                 query={{
+                   // available options: https://developers.google.com/places/web-service/autocomplete
+                   key: 'AIzaSyCGBiv58zM5ElIejqsHz5yB8K_qIsfwUc0',
+                   language: 'en', // language of the results
+                 }}
+                 nearbyPlacesAPI='GooglePlacesSearch' // Which API to use: GoogleReverseGeocoding or GooglePlacesSearch
+
+                 GooglePlacesSearchQuery={{
+                   // available options for GooglePlacesSearch API : https://developers.google.com/places/web-service/search
+                   rankby: 'distance',
+                 }}
+               />
+            </PopupDialog>
+          </View>
+
+          <Button
+            style={[styles.button,styles.bottomButtonCalculate]}
+            backgroundColor={ this.state.trip.length > 0 ? global.palette[2] : global.palette[3]}
+            borderRadius={2} icon={{name: 'checkbox-marked-circle-outline', type: 'material-community'}}
+            title={ this.state.trip.length > 0 ? `Offset Trip: Donate $${this.state.donate}` : "Calculate Carbon Emissions"}
+            onPress={ this.state.trip.length > 0 ? this.dollarCallback.bind(this) : this.onButtonPressSearchDirections.bind(this)}
+          />
+
 
         </View>
         </View>
@@ -239,27 +255,32 @@ export default class AddScreenCar extends Component {
   }
 }
 
+// <Button style={styles.bottomButtonDonate} title={this.state.donate} backgroundColor='#D8EBFF' icon={{name: 'currency-usd', type: 'material-community'}} onPress={this.dollarCallback}/>
+
+
 const styles = StyleSheet.create({
   bottomButtonCalculate: {
-    position: 'absolute',
-    top: 200,
+    marginBottom: 10,
+    width:'80%'
   },
   bottomButtonDonate: {
     position: 'absolute',
     top: 200,
-    left: 100,
   },
   entryView: {
     flexDirection: 'column',
-    marginTop: 20,
+    flex: 1,
+    justifyContent: 'space-between',
+    // marginTop: 20,
     width: '100%',
-    height: '100%',
+    // height: '100%',
   },
   button : {
-    marginTop: 15,
-    shadowRadius: 5,
+    marginTop: 10,
+    shadowRadius: 3,
     shadowOffset: {width: 1,height: 1},
     shadowOpacity: 100,
+    // height: 40
   },
   map: {
     position: 'absolute',
@@ -273,12 +294,11 @@ const styles = StyleSheet.create({
 
 
   container: {
-    paddingTop: 15,
-    paddingLeft: 10,
-    paddingRight: 10,
+    // paddingTop: 15,
+    // paddingLeft: 10,
+    // paddingRight: 10,
     flex: 1,
     alignItems: 'center',
-    backgroundColor: 'green',
   }
   // donateButton: {
   //   backgroundColor: 'green',

@@ -5,11 +5,11 @@ import {
   View,
   Text,
   StyleSheet,
-  Button,
   TouchableOpacity,
   TouchableHighlight
 } from 'react-native';
 import { MapView } from 'expo';
+import { Icon, Button } from 'react-native-elements'
 
 import {Geodesic} from './Geodesic';
 
@@ -99,16 +99,54 @@ export default class CostScreen extends Component {
               />
             <MapView.Marker coordinate={{ latitude: x1, longitude: y1}} pinColor='#357A51' title={depart.code}/>
             <MapView.Marker coordinate={{ latitude: x2, longitude: y2 }} pinColor='#961616' title={arrive.code}/>
+            <MapView.Marker coordinate={{ latitude: (x2+x1)/2, longitude: (y2+y1)/2 }}>
+              <View
+                style={{
+                  backgroundColor: '#37383A',
+                  borderRadius: 5,
+                  borderColor: 'black',
+                  borderWidth: 1,
+                  padding: 5,
+                }}>
+                <Text style={{fontSize: 20, fontWeight:'200', color:global.palette[2]}}>{params.carbon.toFixed(2)} kg CO₂</Text>
+              </View>
+            </MapView.Marker>
 
           </MapView>
         </View>
-        <View style={{flex: 2, backgroundColor: 'white', opacity: 1}}>
-          <TouchableOpacity style={styles.donateButton} onPress={this.finishTransaction.bind(this)}>
-            <Text style={{fontSize: 30}}>{'Offset for $'+cost}</Text>
-          </TouchableOpacity>
-        </View>
+
+        <Button
+          backgroundColor={global.palette[3]}
+          borderRadius={2} icon={{name: 'checkbox-marked-circle-outline', type: 'material-community'}}
+          title={"Offset Trip: Donate $"+cost}
+          onPress={this.finishTransaction.bind(this)}
+          style={{
+            marginTop: 10,
+            marginBottom: 10,
+            shadowRadius: 3,
+            shadowOffset: {width: 1,height: 1},
+            shadowOpacity: 100,
+            position: 'absolute',
+            bottom: 0,
+            left: 0,
+            right: 0
+            // height: 40
+          }}
+        />
       </View>
+
     );
   }
 
 }
+
+// onPress={ this.state.trip.length > 0 ? this.dollarCallback.bind(this) : this.onButtonPressSearchDirections.bind(this)}
+
+// style={[styles.button,styles.bottomButtonCalculate]}
+
+      //   <View style={{flex: 2, backgroundColor: 'white', opacity: 1}}>
+      //     <TouchableOpacity style={styles.donateButton} onPress={this.finishTransaction.bind(this)}>
+      //       <Text style={{fontSize: 30}}>{'Offset for $'+cost}</Text>
+      //     </TouchableOpacity>
+      //   </View>
+      // </View>

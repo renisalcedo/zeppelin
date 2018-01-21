@@ -43,19 +43,6 @@ export default TabNavigator({
   //     ),
   //   },
   // },
-  CharityScreen: {
-    screen: CharityScreen,
-    navigationOptions: {
-      tabBarLabel: 'Charities',
-      tabBarIcon: ({tintColor,focused}) => (
-        <Ionicons
-          name={focused ? 'ios-book' : 'ios-book-outline'}
-          size={26}
-          style={{color:tintColor}}
-        />
-      ),
-    },
-  },
   CreditCardScreen: {
     screen: CreditCardScreen,
     navigationOptions: {
@@ -69,6 +56,20 @@ export default TabNavigator({
       ),
     },
   },
+  CharityScreen: {
+    screen: CharityScreen,
+    navigationOptions: {
+      tabBarLabel: 'Foundation',
+      tabBarIcon: ({tintColor,focused}) => (
+        <Ionicons
+          name={focused ? 'ios-book' : 'ios-book-outline'}
+          size={26}
+          style={{color:tintColor}}
+        />
+      ),
+    },
+  },
+
 }, {
   lazy: true,
   tabBarOptions:{
