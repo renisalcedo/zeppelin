@@ -39,7 +39,9 @@ export default class AddScreenCar extends Component {
     allLats: [],
     allLongs: [],
     trip: [],
-    active: false
+    active: false,
+    startLocation:{latitude: 0, longitude: 0},
+    endLocation:{latitude: 0, longitude: 0},
   };
 
   dollarCallback = () => {
@@ -60,7 +62,7 @@ export default class AddScreenCar extends Component {
   }
 
   locationChanged = (location) => {
-    if(!this.state.active) {
+    if(this.state.active) {
       region = {
         latitude: location.coords.latitude,
         longitude: location.coords.longitude,
@@ -149,6 +151,10 @@ export default class AddScreenCar extends Component {
         };
     this.setState({region : newRegion, trip: saveCoords});
   }
+ 
+  truncate(str) {
+    return str.split(" ").splice(0,10).join(" ");
+  }
 
   render() {
     return (
@@ -165,7 +171,14 @@ export default class AddScreenCar extends Component {
            strokeWidth={2}
            fillColor='#B6E8EF'
            stroke='#B6E8EF'
+           miterLimit={15}
          />
+          <MapView.Marker
+             coordinate={{latitude: this.state.startLocation.lat, longitude: this.state.startLocation.lng}}
+          />
+          <MapView.Marker
+             coordinate={{latitude: this.state.endLocation.lat, longitude: this.state.endLocation.lng}}
+          />
        </MapView>
 
 
@@ -187,7 +200,7 @@ export default class AddScreenCar extends Component {
                  placeholder='Search'
                  minLength={2} // minimum length of text to search
                  onPress={(data, details = null) => { // 'details' is provided when fetchDetails = true
-                  this.setState({from:String(data.description)});
+                  this.setState({from:this.truncate(String(data.description))});
                    console.log(details);
                    this.popupDialogFrom.dismiss();
                  }}
@@ -220,7 +233,7 @@ export default class AddScreenCar extends Component {
                  placeholder='Search'
                  minLength={2} // minimum length of text to search
                  onPress={(data, details = null) => { // 'details' is provided when fetchDetails = true
-                  this.setState({to:String(data.description)});
+                  this.setState({to:this.truncate(String(data.description))});
                    console.log(details);
                    this.popupDialogTo.dismiss();
                  }}
@@ -249,6 +262,7 @@ export default class AddScreenCar extends Component {
 
 
         </View>
+          <TouchableOpacity style={styles.useLocationServices} onPress={this.setFromToCurrentLocation.bind(this)}><Icon style={styles.icon} color='white' size={25} name='near-me' type='material-community' /></TouchableOpacity>
         </View>
 
     );
@@ -259,6 +273,23 @@ export default class AddScreenCar extends Component {
 
 
 const styles = StyleSheet.create({
+  icon: {
+    alignItems: 'center',
+  },
+  useLocationServices: {
+    position: 'absolute',
+    borderWidth: 0.5,
+    borderColor: 'white',
+    borderRadius: 50,
+    right: 10,
+    bottom: 10,
+    height: 45,
+    width: 45,
+    alignItems: 'center',
+    justifyContent: 'center',
+    flexDirection: 'row',
+    backgroundColor: '#D8EBFF'
+  },
   bottomButtonCalculate: {
     marginBottom: 10,
     width:'80%'
