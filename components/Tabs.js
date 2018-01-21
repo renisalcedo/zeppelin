@@ -68,6 +68,8 @@ export default TabNavigator({
       ),
     },
   },
+}, {
+  lazy: true
 },{
   tabBarOptions:{
     activeTintColor: '#396',
