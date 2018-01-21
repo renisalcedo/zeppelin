@@ -17,7 +17,7 @@ export default class Button extends Component {
 
   render(){
     const {toggle} = this.state;
-    const textValue = toggle?"Donate Here":"Thank you for donating!";
+    const textValue = toggle?"Donate Here":"Thank you for your donation!";
     const buttonBg = toggle?"green":'lightgreen';
     const textColor = toggle?"white":'black';
     return (
