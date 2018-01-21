@@ -42,6 +42,7 @@ export default class AddScreenCar extends Component {
     active: false,
     startLocation:{latitude: 0, longitude: 0},
     endLocation:{latitude: 0, longitude: 0},
+    hasLocationAlready:true
   };
 
   dollarCallback = () => {
@@ -50,7 +51,8 @@ export default class AddScreenCar extends Component {
 
   componentWillMount() {
     this.setState({
-      active: true
+      active: true,
+      hasLocationAlready: false
     });
     Location.watchPositionAsync(GEOLOCATION_OPTIONS, this.locationChanged);
   }
@@ -62,7 +64,10 @@ export default class AddScreenCar extends Component {
   }
 
   locationChanged = (location) => {
-    if(this.state.active) {
+    if(this.state.active && !this.state.hasLocationAlready) {
+      this.setState({
+        hasLocationAlready: true
+      });
       region = {
         latitude: location.coords.latitude,
         longitude: location.coords.longitude,
@@ -74,8 +79,8 @@ export default class AddScreenCar extends Component {
   }
 
   setFromToCurrentLocation() {
-    latitude = String(this.state.location.coords.latitude);
-    longitude = String(this.state.location.coords.longitude);
+    latitude = String(this.state.location.coords.latitude.toFixed(4));
+    longitude = String(this.state.location.coords.longitude.toFixed(4));
     this.setState({from: latitude + ", " + longitude});
   }
 
@@ -95,10 +100,10 @@ export default class AddScreenCar extends Component {
         .then(responseJson => {
             if (responseJson.routes.length) {
                 this.setState({
-                    coords: this.decodeGoogleDirections(responseJson.routes[0].overview_polyline.points) // definition below
-                });
-                this.setState({
-                    donate: String(this.carOffsetDonationCalculation(responseJson.routes[0].legs[0].distance.value))
+                    coords: this.decodeGoogleDirections(responseJson.routes[0].overview_polyline.points),
+                    donate: String(this.carOffsetDonationCalculation(responseJson.routes[0].legs[0].distance.value)),
+                    startLocation: responseJson.routes[0].legs[0].start_location,
+                    endLocation: responseJson.routes[0].legs[0].end_location
                 });
             }
             this.setMapViewWithResults();
@@ -179,10 +184,16 @@ export default class AddScreenCar extends Component {
            miterLimit={15}
          />
           <MapView.Marker pinColor='#357A51'
-             coordinate={{latitude: this.state.startLocation.lat, longitude: this.state.startLocation.lng}}
+             coordinate={
+               this.state.startLocation.lat != undefined ?
+               {latitude: this.state.startLocation.lat, longitude: this.state.startLocation.lng} : { latitude: 89, longitude: 179 }
+             }
           />
           <MapView.Marker pinColor='#961616'
-             coordinate={{latitude: this.state.endLocation.lat, longitude: this.state.endLocation.lng}}
+          coordinate={
+            this.state.endLocation.lat != undefined ?
+            {latitude: this.state.endLocation.lat, longitude: this.state.endLocation.lng} : { latitude: 89, longitude: 179 }
+          }
           />
        </MapView>
 
@@ -286,14 +297,14 @@ const styles = StyleSheet.create({
     borderWidth: 0.5,
     borderColor: 'white',
     borderRadius: 50,
-    right: 10,
+    right: 20,
     bottom: 10,
     height: 45,
     width: 45,
     alignItems: 'center',
     justifyContent: 'center',
     flexDirection: 'row',
-    backgroundColor: '#D8EBFF'
+    backgroundColor: global.palette[2]
   },
   bottomButtonCalculate: {
     marginBottom: 10,
