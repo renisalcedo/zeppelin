@@ -1,46 +1,17 @@
 import React, { Component } from "react"
 import { CreditCardInput, LiteCreditCardInput } from "react-native-credit-card-input"
 import { StyleSheet, View, Switch, AsyncStorage } from "react-native"
-import Storage from 'react-native-storage'
 import dismissKeyboard from 'react-native-dismiss-keyboard'
 
 const stripe = require('stripe-client')('pk_test_w7Y0kizm699qdUNBng1Jlltm')
 
-//import Localdb from './utils/Localdb'
-
-const storage = new Storage({
-  // maximum capacity, default 1000 size: 1000, 
-  // Use AsyncStorage for RN, or window.localStorage for web.
-  // If not set, data would be lost after reload.
-  storageBackend: AsyncStorage,
-
-  // expire time, default 1 day(1000 * 3600 * 24 milliseconds).
-  // can be null, which means never expire.
-  defaultExpires: null,
-
-  // cache data in the memory. default is true.
-  enableCache: true,
-
-  // if data was not found in storage or expired,
-  // the corresponding sync method will be invoked and return
-  // the latest data.
-  sync : {
-  // we'll talk about the details later.
-  }
-})
-
-global.storage = storage
+// Creates instance of localdb
+import Localdb from './utils/Localdb'
 
 export default class CreditCardScreen extends Component {
   constructor() {
     super()
   }
-
-  /*
-   *componentDidMount() {
-   *  console.log(Localdb(storage))
-   *}
-   */
 
   state = { useLiteCreditCardInput: false }
 
@@ -48,7 +19,6 @@ export default class CreditCardScreen extends Component {
   _onChange = (formData) => this.handleData(formData)
   _onFocus = (field) => console.log("focusing", field)
   _setUseLiteCreditCardInput = (useLiteCreditCardInput) => this.setState({ useLiteCreditCardInput })
-
 
   render() {
     return (
@@ -123,8 +93,6 @@ export default class CreditCardScreen extends Component {
     // Generates the token with user's info
     if(ready) {
       dismissKeyboard()
-      console.log(ready)
-      console.log(user)
       this.createToken(user)
     }
   }
@@ -137,35 +105,25 @@ export default class CreditCardScreen extends Component {
   }
 
   saveData(customer, token) {
-    // Save something with key only.
-    // Something more unique, and constantly being used.
-    // They are permanently stored unless you remove.
-    storage.save({
-      key: 'loginState',
-      data: {
-        name: customer.card.name,
-        postalCode: customer.postalCode,
-        token: token,
-      },
+    customer.token = token
+    const user = new Localdb()
 
-      expires: null
-    });
-
-    storage.load({
-      key: 'loginState',
-      autoSync: true,
-
-      syncParams: {
-        extraFetchOptions: {
-                // blahblah
-        },
-        someFlag: true,
-      },
-    }).then(ret => {
-      console.log(ret.userid);
-      console.log(ret)
-    }).catch(err => console.log(err))
+    user.save(customer)
+    this.getData()
   }
+
+/*
+ *  getData() {
+ *    let user = new Localdb()
+ *    let data = user.getUser()
+ *
+ *    data.then(this.receiveData)
+ *  }
+ *
+ *  receiveData(data) {
+ *    console.log(data)
+ *  }
+ */
 }
 
 // Styles object
