@@ -3,10 +3,9 @@ import { CreditCardInput, LiteCreditCardInput } from "react-native-credit-card-i
 import { StyleSheet, View, Switch, AsyncStorage } from "react-native"
 import dismissKeyboard from 'react-native-dismiss-keyboard'
 
-const stripe = require('stripe-client')('pk_test_w7Y0kizm699qdUNBng1Jlltm')
-
 // Creates instance of localdb
 import Localdb from './utils/Localdb'
+import Payment from './utils/Payment'
 
 export default class CreditCardScreen extends Component {
   constructor() {
@@ -64,6 +63,9 @@ export default class CreditCardScreen extends Component {
 
   // Process and validates user's data
   handleData(customer) {
+    const pay = new Payment()
+    pay.handlePayment(20)
+
     let user = {}
     let ready = false
 
@@ -93,37 +95,15 @@ export default class CreditCardScreen extends Component {
     // Generates the token with user's info
     if(ready) {
       dismissKeyboard()
-      this.createToken(user)
+      this.saveData(user)
     }
   }
 
-  async createToken(user) {
-    const card  = await stripe.createToken(user)
-    const token = card.id
+  saveData(user) {
+    const customer = new Localdb()
 
-    this.saveData(user, token)
+    customer.save(user)
   }
-
-  saveData(customer, token) {
-    customer.token = token
-    const user = new Localdb()
-
-    user.save(customer)
-    this.getData()
-  }
-
-/*
- *  getData() {
- *    let user = new Localdb()
- *    let data = user.getUser()
- *
- *    data.then(this.receiveData)
- *  }
- *
- *  receiveData(data) {
- *    console.log(data)
- *  }
- */
 }
 
 // Styles object
