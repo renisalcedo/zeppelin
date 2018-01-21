@@ -6,6 +6,8 @@ import PropTypes from 'prop-types';
 import { StyleSheet, Text, View } from 'react-native';
 import { BarCodeScanner, Permissions } from 'expo';
 
+require('./Palette.js');
+
 export default class BoardingPassScanner extends React.Component {
 
   constructor(props) {
@@ -45,6 +47,7 @@ export default class BoardingPassScanner extends React.Component {
           <BarCodeScanner
             onBarCodeRead={this.handleBarCodeRead}
             style={StyleSheet.absoluteFill}
+            torchMode='off'
           />
           <View style={{position: 'absolute', top: 0, left: 0, right: 0, bottom: 0}}>
             <View style={[{flex:5}, shadeStyle]}></View>
@@ -55,8 +58,8 @@ export default class BoardingPassScanner extends React.Component {
             </View>
             <View style={[{flex:5}, shadeStyle]}></View>
           </View>
-          <View style={{position: 'absolute', top: 400, left: 0, right: 0, bottom: 60, backgroundColor: 'rgba(0,0,0,0)'}}>
-            <Text style={{flex: 1, textAlign: 'center', justifyContent: 'center', alignItems: 'center', fontSize: 40, color: '#FFF', fontWeight: '200'}}>Scan Boarding Pass</Text>
+          <View style={{position: 'absolute', top: 80, left: 0, right: 0, bottom: 400, backgroundColor: 'rgba(0,0,0,0)'}}>
+            <Text style={{flex: 1, textAlign: 'center', justifyContent: 'center', alignItems: 'center', fontSize: 40, color: global.palette[4], fontWeight: '200'}}>Scan Boarding Pass</Text>
           </View>
         </View>
       );

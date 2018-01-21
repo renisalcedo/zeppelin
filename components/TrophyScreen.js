@@ -1,14 +1,26 @@
-// screen that tracks total contributions, social integration?
-
-import React, { Component } from 'react';
+import { random, range, round } from "lodash";
+import React, { Component } from "react";
 import {
-  Text
-} from 'react-native';
+  ScrollView,
+  StyleSheet,
+  Text,
+  View,
+  Dimensions
+} from "react-native";
 
 export default class TrophyScreen extends React.Component {
 
   render() {
-    return (<Text>TrophyScreen</Text>);
+
+    return (
+
+      <Text>TrophyScreen</Text>
+
+    );
   }
+
+
+
+
 
 }

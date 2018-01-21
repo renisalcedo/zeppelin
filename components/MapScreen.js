@@ -7,6 +7,8 @@ import { MapView } from 'expo';
 
 import {Geodesic} from './Geodesic';
 
+require('./Palette.js');
+
 export default class App extends React.Component {
 
 
@@ -62,22 +64,17 @@ export default class App extends React.Component {
     let flights = this.getFlights();
 
     let color = [
-      "#F00",
-      "#0F0",
-      "#00F",
-      "#FF0",
-      "#F0F",
-      "#0FF",
-      "#FFF",
-      "#000",
-    ]
+      global.palette[0],
+      global.palette[2],
+      global.palette[4]
+    ];
 
     return (
       <View style={{flex:4}}>
         <MapView
           style={{ flex: 1 }}
           initialRegion={{
-            latitude: 0,
+            latitude: 30,
             longitude: -30,
             latitudeDelta: 90,
             longitudeDelta: 180,
@@ -88,8 +85,9 @@ export default class App extends React.Component {
                 return   <MapView.Polyline
                             coordinates={geo}
                             strokeColor={color[index % color.length]}
-                            strokeWidth={3}
+                            strokeWidth={2.5}
                             geodesic={true}
+                            lineDashPattern={[10,7]}
                             key = {index}
                           />
               })

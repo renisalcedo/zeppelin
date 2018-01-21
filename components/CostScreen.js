@@ -13,20 +13,22 @@ import { MapView } from 'expo';
 
 import {Geodesic} from './Geodesic';
 
+require('./Palette.js');
+
 const styles = StyleSheet.create({
   airport: {
     fontSize: 40,
     fontWeight: '400',
-    color: '#000'
+    color: global.palette[3]
   },
-  header: {
-    flex: 2,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#0F0'
-  },
+  // header: {
+  //   flex: 2,
+  //   justifyContent: 'center',
+  //   alignItems: 'center',
+  //   backgroundColor: global.palette[1]
+  // },
   donateButton: {
-    backgroundColor: '#F00',
+    backgroundColor: global.palette[3],
     flex: 2,
     justifyContent: 'center',
     alignItems: 'center',
@@ -40,11 +42,15 @@ export default class CostScreen extends Component {
   }
 
   static navigationOptions = ({ navigation }) => {
+
+    let arrive = navigation.state.params.trip.arrive.code;
+    let depart = navigation.state.params.trip.depart.code;
+
     return {
-      title: `Offset Your Flight`,
+      title: depart+" -> "+arrive,
       headerMode: 'screen',
       headerVisible: false
-    }
+    };
   };
 
   finishTransaction() {
@@ -69,11 +75,12 @@ export default class CostScreen extends Component {
     let x2 = parseFloat(arrive.lat);
     let y2 = parseFloat(arrive.lon);
 
+    // <View style={styles.header}>
+    //   <Text style={styles.airport}>{depart.code} -> {arrive.code}</Text>
+    // </View>
+
     return (
       <View style={{flex:1}}>
-        <View style={styles.header}>
-          <Text style={styles.airport}>{depart.code} -> {arrive.code}</Text>
-        </View>
         <View style={{flex:16}}>
           <MapView
             style={{ flex: 1 }}
@@ -85,13 +92,13 @@ export default class CostScreen extends Component {
             }}>
             <MapView.Polyline
               coordinates={Geodesic(x1,y1,x2,y2)}
-              strokeColor="#33F" // fallback for when `strokeColors` is not supported by the map-provider
+              strokeColor={global.palette[5]} // fallback for when `strokeColors` is not supported by the map-provider
               strokeWidth={3}
               geodesic={true}
-              lineDashPattern={[10,3,3,3]}
+              lineDashPattern={[10,7]}
               />
-            <MapView.Marker coordinate={{ latitude: x1, longitude: y1}} pinColor='green'  />
-            <MapView.Marker coordinate={{ latitude: x2, longitude: y2 }} />
+            <MapView.Marker coordinate={{ latitude: x1, longitude: y1}} pinColor='#357A51' title={depart.code}/>
+            <MapView.Marker coordinate={{ latitude: x2, longitude: y2 }} pinColor='#961616' title={arrive.code}/>
 
           </MapView>
         </View>

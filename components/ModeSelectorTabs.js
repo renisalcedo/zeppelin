@@ -36,6 +36,15 @@ const ChooseNavigator = TabNavigator({
       ),
     },
   }
+},{
+  tabBarOptions:{
+    activeTintColor: global.palette[2],
+    activeBackgroundColor: global.palette[1],
+    labelStyle: {
+      fontSize: 14,
+    },
+    title: 'App'
+  }
 });
 
 

@@ -11,6 +11,7 @@ import { Ionicons } from '@expo/vector-icons';
 import Tabs from './Tabs'
 import AddScreen from './AddScreen'
 
+require('./Palette.js');
 
 export default class HomeScreen extends Component {
 
@@ -32,7 +33,7 @@ export default class HomeScreen extends Component {
             <Ionicons
               name={'md-add'}
               size={26}
-              style={{color:'#397CF2'}} />
+              style={{color:global.palette[1]}} />
           </TouchableOpacity>
           <View style={{width: 17, height: 20, opacity: 0}} />
         </View>

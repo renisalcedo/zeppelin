@@ -14,6 +14,7 @@ import TrophyScreen from './TrophyScreen'
 import MapScreen from './MapScreen'
 import CharityScreen from './CharityScreen'
 import CreditCardScreen from './CreditCardScreen'
+require('./Palette.js')
 
 export default TabNavigator({
   TrophyScreen: {
@@ -69,13 +70,12 @@ export default TabNavigator({
     },
   },
 }, {
-  lazy: true
-},{
+  lazy: true,
   tabBarOptions:{
-    activeTintColor: '#396',
-    activeBackgroundColor: '#CCC',
+    activeTintColor: global.palette[2],
+    activeBackgroundColor: global.palette[1],
     labelStyle: {
-      fontSize: 12,
+      fontSize: 14,
     },
     title: 'App'
   }

@@ -24,13 +24,19 @@ global.moveToSuccessScreen = () => { return null };
 const AddScreenNavigator = StackNavigator(
   {
     HomeScreen: {
-      screen: HomeScreen
+      screen: HomeScreen,
+      navigationOptions: () => ({
+        title: `Zeppelin`,
+      }),
     },
     ModeSelectorTabs: {
-      screen: ModeSelectorTabs
+      screen: ModeSelectorTabs,
+      navigationOptions: () => ({
+        title: `Select Travel`,
+      }),
     },
     CostScreen: {
-      screen: CostScreen
+      screen: CostScreen,
     },
     SuccessScreen: {
       screen: SuccessScreen

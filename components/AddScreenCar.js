@@ -67,10 +67,7 @@ export default class AddScreenCar extends Component {
         longitudeDelta: 0.05,
       },
       this.setState({location, region})
-    } else {
-      console.log("ASYNC CALLBACK");
     }
-
   }
 
 
