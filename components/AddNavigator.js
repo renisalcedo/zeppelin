@@ -21,22 +21,31 @@ global.modeChooserActive = false;
 global.moveToCostScreen = () => { return null };
 global.moveToSuccessScreen = () => { return null };
 
+require('./Palette.js');
+
+const titleColor = '#1e2127';//global.palette[5]
+
 const AddScreenNavigator = StackNavigator(
   {
     HomeScreen: {
       screen: HomeScreen,
-      navigationOptions: () => ({
-        title: `Zeppelin`,
-      }),
+      navigationOptions: ({ navigation, screenProps }) => ({
+        title: 'Zeppelin',
+        headerTintColor: titleColor,
+      })
     },
     ModeSelectorTabs: {
       screen: ModeSelectorTabs,
-      navigationOptions: () => ({
-        title: `Select Travel`,
-      }),
+      navigationOptions: ({ navigation, screenProps }) => ({
+        title: 'Select Travel',
+        headerTintColor: titleColor,
+      })
     },
     CostScreen: {
       screen: CostScreen,
+      navigationOptions: ({ navigation, screenProps }) => ({
+        headerTintColor: titleColor,
+      })
     },
     SuccessScreen: {
       screen: SuccessScreen

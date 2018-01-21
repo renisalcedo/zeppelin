@@ -170,7 +170,7 @@ export default class SuccessScreen extends React.Component {
             color: global.palette[2],
             textAlign: 'center'
             }}>
-            Continue
+            Home
           </Text>
         </TouchableOpacity>
 
