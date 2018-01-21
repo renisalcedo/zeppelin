@@ -50,13 +50,49 @@ export default class BoardingPassScanner extends React.Component {
             torchMode='off'
           />
           <View style={{position: 'absolute', top: 0, left: 0, right: 0, bottom: 0}}>
-            <View style={[{flex:5}, shadeStyle]}></View>
-            <View style={{flex:3, flexDirection: 'row'}}>
+            <View style={[{flex:5, flexDirection: 'row'}, shadeStyle]}>
+
+
+
               <View style={[{flex:1},shadeStyle]}></View>
-              <View style={{flex:10}}></View>
-              <View style={[{flex:1},shadeStyle]}></View>
+              <View style={{flex:11.35,flexDirection:'row',justifyContent:'space-between'}}>
+
+                <View style={{width:23,height:'100%',borderBottomColor:'white',borderBottomWidth:3}}></View>
+                <View style={{width:23,height:'100%',borderBottomColor:'white',borderBottomWidth:3}}></View>
+
+              </View>
+              <View style={[{flex:1,justifyContent:'space-between'},shadeStyle]}></View>
+
+
+
+
+
             </View>
-            <View style={[{flex:5}, shadeStyle]}></View>
+            <View style={{flex:3, flexDirection: 'row'}}>
+              <View style={[{flex:1,justifyContent:'space-between'},shadeStyle]}>
+                <View style={{height:20,borderRightColor:'white',borderRightWidth:3}}></View>
+                <View style={{height:20,borderRightColor:'white',borderRightWidth:3}}></View>
+              </View>
+              <View style={{flex:10}}></View>
+              <View style={[{flex:1,justifyContent:'space-between'},shadeStyle]}>
+                <View style={{height:20,borderLeftColor:'white',borderLeftWidth:3}}></View>
+                <View style={{height:20,borderLeftColor:'white',borderLeftWidth:3}}></View>
+              </View>
+            </View>
+            <View style={[{flex:5,flexDirection: 'row'}, shadeStyle]}>
+
+
+            <View style={[{flex:1},shadeStyle]}></View>
+            <View style={{flex:11.35,flexDirection:'row',justifyContent:'space-between'}}>
+
+              <View style={{width:23,height:'100%',borderTopColor:'white',borderTopWidth:3}}></View>
+              <View style={{width:23,height:'100%',borderTopColor:'white',borderTopWidth:3}}></View>
+
+            </View>
+            <View style={[{flex:1,justifyContent:'space-between'},shadeStyle]}></View>
+
+
+            </View>
           </View>
           <View style={{position: 'absolute', top: 80, left: 0, right: 0, bottom: 400, backgroundColor: 'rgba(0,0,0,0)'}}>
             <Text style={{flex: 1, textAlign: 'center', justifyContent: 'center', alignItems: 'center', fontSize: 40, color: global.palette[4], fontWeight: '200'}}>Scan Boarding Pass</Text>

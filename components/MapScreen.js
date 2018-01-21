@@ -82,7 +82,8 @@ export default class App extends React.Component {
             {
               flights.map( (name, index, flights) => {
                 let geo = Geodesic(name.dep.lat,name.dep.lon,name.arr.lat,name.arr.lon);
-                return   <MapView.Polyline
+                return   <View key={index+'c'}>
+                          <MapView.Polyline
                             coordinates={geo}
                             strokeColor={color[index % color.length]}
                             strokeWidth={2.5}
@@ -90,6 +91,9 @@ export default class App extends React.Component {
                             lineDashPattern={[10,7]}
                             key = {index}
                           />
+                          <MapView.Marker key={index+'a'} coordinate={{ latitude: name.dep.lat, longitude: name.dep.lon}} pinColor='#336' title={name.code}/>
+                          <MapView.Marker key={index+'b'} coordinate={{ latitude: name.arr.lat, longitude: name.arr.lon }} pinColor='#336' title={name.code}/>
+                        </View>
               })
 
             }

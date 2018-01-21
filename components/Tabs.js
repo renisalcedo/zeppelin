@@ -17,19 +17,6 @@ import CreditCardScreen from './CreditCardScreen'
 require('./Palette.js')
 
 export default TabNavigator({
-  TrophyScreen: {
-    screen: TrophyScreen,
-    navigationOptions: {
-      tabBarLabel: 'History',
-      tabBarIcon: ({tintColor,focused}) => (
-        <Ionicons
-          name={focused ? 'ios-trophy' : 'ios-trophy-outline'}
-          size={26}
-          style={{color:tintColor}}
-        />
-      ),
-    },
-  },
   MapScreen: {
     screen: MapScreen,
     navigationOptions: {
@@ -43,6 +30,19 @@ export default TabNavigator({
       ),
     },
   },
+  // TrophyScreen: {
+  //   screen: TrophyScreen,
+  //   navigationOptions: {
+  //     tabBarLabel: 'History',
+  //     tabBarIcon: ({tintColor,focused}) => (
+  //       <Ionicons
+  //         name={focused ? 'ios-trophy' : 'ios-trophy-outline'}
+  //         size={26}
+  //         style={{color:tintColor}}
+  //       />
+  //     ),
+  //   },
+  // },
   CharityScreen: {
     screen: CharityScreen,
     navigationOptions: {
@@ -59,7 +59,7 @@ export default TabNavigator({
   CreditCardScreen: {
     screen: CreditCardScreen,
     navigationOptions: {
-      tabBarLabel: 'Credentials',
+      tabBarLabel: 'Finances',
       tabBarIcon: ({tintColor,focused}) => (
         <Ionicons
           name={focused ? 'ios-card' : 'ios-card-outline'}

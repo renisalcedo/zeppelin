@@ -16,6 +16,8 @@ import car from "./car.json";
 import check from "./success.json";
 
 
+require('./Palette.js');
+
 const { Lottie } = DangerZone;
 
 let delay = 2600;
@@ -77,7 +79,6 @@ export default class SuccessScreen extends React.Component {
         ).start();
       },500)
     }
-
 
     // TODO: conduct payment here
 
@@ -166,7 +167,7 @@ export default class SuccessScreen extends React.Component {
             zIndex:10,
             fontSize: 30,
             fontWeight: '300',
-            color: '#8CD',
+            color: global.palette[2],
             textAlign: 'center'
             }}>
             Continue
