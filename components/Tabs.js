@@ -70,4 +70,13 @@ export default TabNavigator({
   },
 }, {
   lazy: true
+},{
+  tabBarOptions:{
+    activeTintColor: '#396',
+    activeBackgroundColor: '#CCC',
+    labelStyle: {
+      fontSize: 12,
+    },
+    title: 'App'
+  }
 });

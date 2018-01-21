@@ -84,7 +84,6 @@ export default class App extends React.Component {
           }}>
             {
               flights.map( (name, index, flights) => {
-                console.log(name,index);
                 let geo = Geodesic(name.dep.lat,name.dep.lon,name.arr.lat,name.arr.lon);
                 return   <MapView.Polyline
                             coordinates={geo}

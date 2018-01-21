@@ -39,8 +39,7 @@ export default class CarbonConverter extends React.Component {
     let trip = this.getAirportData(depart,arrive);
     // console.log(trip);
     let cost = this.calculate(trip.arrive['lat'],trip.arrive['lon'],trip.depart['lat'],trip.depart['lon']);
-    console.log(cost);
-    this.props.callbackFromParent(trip,cost);
+    this.props.callbackFromParent(trip,cost,(cost -.3)/15*1016.05);
   }
 
   render() {
