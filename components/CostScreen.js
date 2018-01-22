@@ -54,10 +54,12 @@ export default class CostScreen extends Component {
   };
 
   finishTransaction() {
+    let trip = this.props.navigation.state.params.trip;
     this.props.navigation.navigate("SuccessScreen",{
        cost: this.props.navigation.state.params.cost,
        carbon: this.props.navigation.state.params.carbon,
-       mode: 'plane'
+       mode: 'plane',
+       trip: trip
      });
   }
 
@@ -102,7 +104,7 @@ export default class CostScreen extends Component {
             <MapView.Marker coordinate={{ latitude: (x2+x1)/2, longitude: (y2+y1)/2 }}>
               <View
                 style={{
-                  backgroundColor: '#37383A', 
+                  backgroundColor: '#37383A',
                   borderRadius: 5,
                   borderColor: 'black',
                   borderWidth: 1,

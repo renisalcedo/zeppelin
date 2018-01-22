@@ -82,25 +82,25 @@ export default class SuccessScreen extends React.Component {
       },500)
     } else {
 
-      AsyncStorage.setItem('flights', '');
+      // AsyncStorage.setItem('flights', '');
 
-      // AsyncStorage.getItem('flights').then((value)=>{
-      //   var obj = JSON.parse(value);
-      //   console.log(obj);
-      //   var row = {
-      //     from: 'JFK',
-      //     to: 'LAX'
-      //   };
-      //   if(obj != null) {
-      //     obj.push(row);
-      //   } else {
-      //     console.log('obj is null');
-      //     obj = [row];
-      //   }
-      //   AsyncStorage.setItem('flights', JSON.stringify(obj));
-      // }).catch(function () {
-      //   console.log("Promise Rejected");
-      // });
+      let flight = this.props.navigation.state.params.trip;
+
+      AsyncStorage.getItem('flights').then((value)=>{
+        var obj = JSON.parse(value);
+        console.log(obj);
+        var row = flight;
+        if(obj != null) {
+          obj.push(row);
+        } else {
+          console.log('obj is null');
+          obj = [row];
+        }
+        AsyncStorage.setItem('flights', JSON.stringify(obj));
+        global.resetFunction();
+      }).catch(function () {
+        console.log("Promise Rejected");
+      });
 
 
 

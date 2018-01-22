@@ -1,5 +1,7 @@
 // Screen seen at start of app
 
+import { AsyncStorage } from 'react-native';
+
 import React, { Component } from 'react';
 import {
   View,
@@ -39,7 +41,21 @@ export default class HomeScreen extends Component {
       </View>
       </TouchableOpacity>
     );
-    return { headerRight };
+    let headerLeft = (
+      <TouchableOpacity onPress={()=>{AsyncStorage.setItem('flights', ''); global.resetFunction();}}>
+      <View style={{flex:1}}>
+        <View style={{width: 5, height: 8,}}></View>
+        <View style={{flex: 1, flexDirection: 'row'}}>
+          <View style={{width: 17, height: 20, opacity: 0}} />
+            <Ionicons
+              name={'ios-trash-outline'}
+              size={26}
+              style={{color:global.palette[1]}} />
+        </View>
+      </View>
+      </TouchableOpacity>
+    );
+    return { headerLeft,headerRight };
   };
 
   addScreen = () => {
